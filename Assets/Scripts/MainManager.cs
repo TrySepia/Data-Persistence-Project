@@ -8,7 +8,7 @@ public class MainManager : MonoBehaviour
 {
     public static MainManager Instance;
     public int highScore;
-    public string playerName = "Placeholder";
+    public string playerName;
     
 
     public Brick BrickPrefab;
@@ -25,12 +25,24 @@ public class MainManager : MonoBehaviour
     
     private bool m_GameOver = false;
 
-    
+
+    private void Awake()
+    {
+        if (Instance != null)
+        {
+            Destroy(gameObject);
+            return;
+        }
+        Instance = this;
+        DontDestroyOnLoad(gameObject);
+        //LoadColor();
+    }
+
     // Start is called before the first frame update
     void Start()
     {
         //add name and best score placeholder
-        AddMainText("0");
+        AddMainText();
 
         const float step = 0.6f;
         int perLine = Mathf.FloorToInt(4.0f / step);
@@ -79,11 +91,10 @@ public class MainManager : MonoBehaviour
     }
 
 
-    void AddMainText(string best)
+    void AddMainText()
     {
-        Debug.Log(playerName);
-        //nameText.text = "Name: " + playerName;
-        //bestText.text = "Best: " + best;
+        nameText.text = "Name: " + playerName;
+        bestText.text = "Best: ";
     }
 
     public void GameOver()

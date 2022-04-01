@@ -14,11 +14,11 @@ using UnityEditor;
 [DefaultExecutionOrder(1000)]
 public class MenuUI : MonoBehaviour
 {
-
     public Text playerInput;
 
     private void Start()
     {
+        MainManager.Instance.playerName = "NO NAME";
     }
 
     public void StartNew()
@@ -31,7 +31,7 @@ public class MenuUI : MonoBehaviour
     public void SetPlayerName() 
     { 
    
-        Debug.Log(playerInput.text);
+        Debug.Log(MainManager.Instance.playerName);
         MainManager.Instance.playerName = playerInput.text;
         //Debug.Log(MainManager.Instance.playerName);
     }
