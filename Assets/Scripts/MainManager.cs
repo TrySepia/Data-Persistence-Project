@@ -6,6 +6,10 @@ using UnityEngine.UI;
 
 public class MainManager : MonoBehaviour
 {
+
+    public Text bestText;
+    public Text nameText;
+
     public Brick BrickPrefab;
     public int LineCount = 6;
     public Rigidbody Ball;
@@ -22,6 +26,9 @@ public class MainManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+
+        UpdateText();
+
         const float step = 0.6f;
         int perLine = Mathf.FloorToInt(4.0f / step);
         
@@ -42,6 +49,7 @@ public class MainManager : MonoBehaviour
     {
         if (!m_Started)
         {
+
             if (Input.GetKeyDown(KeyCode.Space))
             {
                 m_Started = true;
@@ -68,9 +76,20 @@ public class MainManager : MonoBehaviour
         ScoreText.text = $"Score : {m_Points}";
     }
 
+    void UpdateText()
+    {
+        bestText.text = "Best: " + DataManager.Instance.bestScore;
+        nameText.text = "Name: " + DataManager.Instance.playerName;
+    }
+
     public void GameOver()
     {
         m_GameOver = true;
         GameOverText.SetActive(true);
+
+        if (m_Points> DataManager.Instance.bestScore)
+        {
+            DataManager.Instance.bestScore = m_Points;
+        }
     }
 }
